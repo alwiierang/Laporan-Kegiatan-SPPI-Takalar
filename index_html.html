@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260827-01-09c8733","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Canva Sans":"YAFLd8sKbwc,2","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YAFdJksXcAk,0","Libre Baskerville":"YACgEUFdPdA,0","Manrope":"YAHO2b2feC4,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YADLjI9qxTA,0","Nunito":"YACgEX8C5Gg,0","Oleo Script":"YACgEQQ14jI,0","Phantom Sans":"YAHO2E8Pb88,0","Playfair Display":"YACgEYmuCJE,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YADWjpfPmdk,0","Raleway":"YACgEVg3xZg,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Spectral":"YAHO2rVUHIM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Ubuntu":"YACgERDU--Q,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YADlN8CFZ8Q,0","ui-sans-serif":"YACkoN-xg4g,0"}}');</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pelaporan Briefing Harian SPPG Takalar</title>
+  
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --navy: #08275d;
+      --blue: #1267c3;
+      --ink: #17253b;
+      --muted: #64748b;
+      --line: #d9e4f1;
+      --soft: #f4f8fc;
+      --good: #087f5b;
+      --warning: #b45309;
+      --danger: #b42318;
+    }
+    * { box-sizing: border-box; }
+    body { font-family: "DM Sans", sans-serif; color: var(--ink); background: var(--soft); }
+    button, input, select, textarea { font: inherit; }
+    button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visible {
+      outline: 3px solid rgba(18, 103, 195, .35);
+      outline-offset: 3px;
+    }
+    .app-shell { width: 100%; min-height: 100vh; }
+    
+    .top-band {
+      position: relative; overflow: hidden;
+      background: linear-gradient(120deg, #061737 0%, #08275d 48%, #1267c3 100%);
+    }
+    .top-band::before {
+      content: ""; position: absolute; width: 480px; height: 480px; border-radius: 50%;
+      right: -155px; top: -305px; border: 1px solid rgba(255,255,255,.16);
+      box-shadow: 0 0 0 46px rgba(255,255,255,.045), 0 0 0 94px rgba(255,255,255,.03);
+    }
+    
+    .view { display: none; }
+    .view.is-active { display: block; animation: enter .35s ease both; }
+    .nav-tab.is-active { background: #ffffff; color: var(--navy); box-shadow: 0 8px 20px rgba(0, 17, 50, .2); }
+    .nav-tab.is-active span { color: #08275d !important; }
+    .nav-tab.is-active i { color: #08275d !important; stroke: currentColor; }
+    
+    .field {
+      width: 100%; border: 1px solid #cbd9e9; border-radius: .8rem; padding: .78rem .9rem;
+      background: #fff; color: var(--ink); transition: border-color .2s, box-shadow .2s;
+    }
+    .field:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(18,103,195,.12); }
+    .field:disabled { background: #eef3f8; color: #8a98aa; cursor: not-allowed; }
+    
+    .submit-loading { position: relative; color: transparent !important; }
+    .submit-loading::after { content: ""; position: absolute; top: 50%; left: 50%; margin-top: -0.5rem; margin-left: -0.5rem; width: 1rem; height: 1rem; border: 2px solid rgba(255,255,255,.45); border-top-color: #fff; border-radius: 999px; animation: submit-spin .7s linear infinite; }
+    @keyframes submit-spin { to { transform: rotate(360deg); } }
+    
+    .submit-success-label { display: none; }
+    .submit-report.is-success .submit-report-label { display: none; }
+    .submit-report.is-success .submit-success-label { display: inline; }
+    .field-label { display: block; margin-bottom: .45rem; font-size: .875rem; font-weight: 700; color: #233551; }
+    
+    .notice { display: none; opacity: 1; transition: opacity .45s ease; }
+    .notice.show { display: flex; animation: notice-timeout 6s ease forwards; }
+    @keyframes notice-timeout { 0%, 78% { opacity: 1; } 100% { opacity: 0; } }
+    
+    .upload-zone { border: 2px dashed #b9cee7; transition: .2s ease; }
+    .upload-zone:hover { border-color: var(--blue); background: #f7fbff; }
+    .photo-preview img { width: 100%; height: 180px; object-fit: cover; border-radius: .8rem; }
+    
+    .schedule-link { transition: transform .2s ease, box-shadow .2s ease; }
+    .schedule-link:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(8,39,93,.09); }
+    
+    .donut-chart { width: min(270px, 78vw); aspect-ratio: 1; border-radius: 50%; position: relative; display: grid; place-items: center; box-shadow: inset 0 0 0 1px rgba(8,39,93,.08), 0 12px 28px rgba(8,39,93,.1); background: conic-gradient(#087f5b 0% 40%, #b45309 40% 65%, #b42318 65% 85%, #7c3aed 85% 100%); }
+    .donut-chart::after { content: ""; width: 58%; height: 58%; border-radius: 50%; background: #fff; box-shadow: 0 0 0 1px rgba(8,39,93,.06); }
+    .donut-center { position: absolute; z-index: 1; text-align: center; pointer-events: none; }
+    
+    @keyframes enter { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
+    
+    @media (max-width: 640px) {
+      .nav-tab { flex: 1; justify-content: center; padding: .7rem .45rem; font-size: .72rem; }
+      .nav-tab svg { display: none; }
+    }
+  </style>
+</head>
+
+<body data-template-id="__page-root">
+  <div class="app-shell">
+    
+    <header class="top-band">
+      <div class="relative z-10 mx-auto w-full max-w-6xl px-5 py-7 sm:px-8 sm:py-9">
+        <div class="flex flex-wrap items-start justify-between gap-5">
+          <div class="flex items-start gap-4">
+            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/25 bg-white/15 p-2 text-white">
+              <i data-lucide="clipboard-check" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <p class="mb-1 text-xs font-bold uppercase tracking-[.18em] text-blue-100">SPPG Kabupaten Takalar</p>
+              <h1 class="text-2xl sm:text-3xl font-extrabold text-white">Pelaporan Briefing Harian</h1>
+              <p class="mt-2 max-w-2xl text-sm leading-6 text-blue-100">Pusat pelaporan briefing relawan yang tertib, cepat, dan terpantau.</p>
+            </div>
+          </div>
+          
+          <div class="flex flex-col items-end gap-2 text-right text-white">
+            <div class="rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-right text-white">
+              <p id="live-date" class="text-xs font-semibold text-blue-100"></p>
+              <p id="live-clock" class="mt-1 text-xl font-extrabold tracking-wide" aria-live="polite">00.00.00 WITA</p>
+            </div>
+          </div>
+        </div>
+        
+        <nav aria-label="Navigasi dashboard" class="mt-7 flex max-w-3xl gap-2 rounded-2xl bg-black/15 p-2">
+          <button type="button" class="nav-tab is-active flex items-center gap-2 rounded-xl px-4 py-2.5 font-bold text-white transition" data-view-target="laporan">
+            <i data-lucide="file-pen-line" width="16" aria-hidden="true"></i> 
+            <span>Laporan</span> 
+          </button> 
+          <button type="button" class="nav-tab flex items-center gap-2 rounded-xl px-4 py-2.5 font-bold text-white transition" data-view-target="ringkasan">
+            <i data-lucide="chart-no-axes-combined" width="16" aria-hidden="true"></i> 
+            <span>Ringkasan</span> 
+          </button> 
+          <button type="button" class="nav-tab flex items-center gap-2 rounded-xl px-4 py-2.5 font-bold text-white transition" data-view-target="admin">
+            <i data-lucide="shield-check" width="16" aria-hidden="true"></i> 
+            <span>Admin</span> 
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="mx-auto w-full max-w-6xl px-5 py-7 sm:px-8 sm:py-10">
+      
+      <!-- Tab 1: Laporan View -->
+      <section id="laporan-view" class="view is-active" aria-labelledby="report-heading">
+        <div class="grid gap-6 lg:grid-cols-[1.55fr_.8fr]">
+          <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
+            <div class="mb-6 flex items-start justify-between gap-4 border-b border-slate-100 pb-5">
+              <div>
+                <h2 id="report-heading" class="font-bold text-xl text-slate-800">Formulir Laporan Harian</h2>
+                <p class="mt-1 text-sm leading-6 text-slate-500">Lengkapi laporan briefing sesuai kondisi operasional unit hari ini.</p>
+              </div>
+              <div class="rounded-xl bg-blue-50 p-3 text-[#1267c3]">
+                <i data-lucide="calendar-check-2" aria-hidden="true"></i>
+              </div>
+            </div>
+            
+            <div id="form-notice" class="notice mb-5 items-center gap-3 rounded-xl border px-4 py-3 text-sm font-semibold" role="status" aria-live="polite"></div>
+            
+            <form id="report-form">
+              <div class="grid gap-5 sm:grid-cols-2">
+                <div class="sm:col-span-2">
+                  <label class="field-label" for="nama-lengkap">Nama Lengkap (tanpa gelar)</label> 
+                  <input id="nama-lengkap" class="field" type="text" autocomplete="name" required placeholder="Masukkan nama lengkap">
+                </div>
+                
+                <div class="sm:col-span-2">
+                  <label class="field-label" for="email">Alamat Email</label> 
+                  <input id="email" class="field" type="email" autocomplete="email" required placeholder="contoh@gmail.com">
+                </div>
+                
+                <div class="sm:col-span-2">
+                  <label class="field-label" for="nama-sppg">Nama SPPG</label> 
+                  <select id="nama-sppg" class="field" required> 
+                    <option value="">Pilih nama SPPG</option> 
+                    <option>SPPI Magang Takalar</option> 
+                    <option>SPPG Takalar Mangarabombang Mangadu 1</option> 
+                    <option>SPPG Takalar Mangarabombang Mangadu 2</option> 
+                    <option>SPPG Takalar Mangarabombang Mangadu 4</option> 
+                    <option>SPPG Takalar Mangarabombang Topejawa</option> 
+                    <option>SPPG Takalar Laikang Cikoang 1</option> 
+                    <option>SPPG Takalar Laikang Cikoang 2</option> 
+                    <option>SPPG Takalar Sanrobone Laguruda</option> 
+                    <option>SPPG Takalar Sanrobone Paddinging</option> 
+                    <option>SPPG Takalar Galesong Kampung Beru</option> 
+                    <option>SPPG Takalar Galesong Pa'rasangang Beru</option> 
+                    <option>SPPG Takalar Galesong Pa'rasangang Beru 2</option> 
+                    <option>SPPG Polongbangkeng Timur Timbuseng 03</option> 
+                    <option>SPPG Takalar Galesong Boddia</option> 
+                    <option>SPPG Takalar Galesong Pattinoang</option> 
+                    <option>SPPG Takalar Galesong Galesong Kota</option> 
+                    <option>SPPG Takalar Galesong Selatan Mangindara</option> 
+                    <option>SPPG Takalar Galesong Selatan Bontomarannu</option> 
+                    <option>SPPG Takalar Galesong Selatan Bonto Kanang</option> 
+                    <option>SPPG Takalar Galesong Selatan Bontokassi</option> 
+                    <option>SPPG Takalar Galesong Selatan Kale Bentang</option> 
+                    <option>SPPG Takalar Galesong Utara Bontolebang</option> 
+                    <option>SPPG Takalar Galesong Utara Bontolebang 1</option> 
+                    <option>SPPG Takalar Galesong Utara Bontolebang 2</option> 
+                    <option>SPPG Takalar Galesong Utara Bontolebang 3</option> 
+                    <option>SPPG Takalar Galesong Utara Aeng Batu Batu</option> 
+                    <option>SPPG Takalar Galesong Utara Sawakung Beba</option> 
+                    <option>SPPG Takalar Galesong Utara Bontolanra 4</option> 
+                    <option>SPPG Takalar Pattallassang Kalabbirang</option> 
+                    <option>SPPG Takalar Pattallassang Somba Bella</option> 
+                    <option>SPPG Takalar Pattallassang Somba Bella 2</option> 
+                    <option>SPPG Takalar Pattallassang Somba Bella 3</option> 
+                    <option>SPPG Takalar Pattallassang Kalabbirang 2</option> 
+                    <option>SPPG Takalar Pattallassang Kalabbirang 3</option> 
+                    <option>SPPG Takalar Galesong Utara Bontolanra</option> 
+                    <option>SPPG Takalar Polongbangkeng Selatan Bontokadatto</option> 
+                    <option>SPPG Takalar Polongbangkeng Selatan Pa'bundukang</option> 
+                    <option>SPPG Takalar Polongbangkeng Utara Lassang</option> 
+                    <option>SPPG Takalar Polongbangkeng Utara Malewang</option> 
+                    <option>SPPG Takalar Polongbangkeng Utara Panrannuangku</option> 
+                    <option>SPPG Takalar Polongbangkeng Utara Towata</option> 
+                    <option>SPPG Takalar Polongbangkeng Utara Malewang 2</option> 
+                    <option>SPPG Takalar Polongbangkeng Utara Palleko</option> 
+                    <option>SPPG Takalar Polongbangkeng Utara Palleko 2</option> 
+                    <option>SPPG Takalar Polongbangkeng Timur Ko'mara</option> 
+                    <option>SPPG Takalar Mappakasunggu Takalar</option> 
+                  </select>
+                </div>
+                
+                <div>
+                  <label class="field-label" for="tanggal">Tanggal Briefing</label> 
+                  <input id="tanggal" class="field" type="date" required>
+                </div>
+                
+                <div>
+                  <label class="field-label" for="waktu">Waktu Briefing</label> 
+                  <input id="waktu" class="field" type="time" required>
+                </div>
+                
+                <div class="sm:col-span-2">
+                  <label class="field-label" for="status-operasional">Status Operasional</label> 
+                  <select id="status-operasional" class="field" required> 
+                    <option value="">Pilih status operasional</option> 
+                    <option value="Operasional">Operasional</option> 
+                    <option value="Belum Operasional">Belum Operasional</option> 
+                    <option value="Suspend">Suspend</option> 
+                    <option value="SPPI Magang">SPPI Magang</option> 
+                  </select>
+                </div>
+              </div>
+              
+              <div id="briefing-fields" class="mt-5 hidden rounded-2xl border border-blue-100 bg-blue-50/60 p-4 sm:p-5 transition-all">
+                <div class="grid gap-5 sm:grid-cols-2">
+                  <div>
+                    <label class="field-label" for="divisi-briefing">Divisi yang di-briefing</label> 
+                    <select id="divisi-briefing" class="field"> 
+                      <option value="">Pilih divisi briefing</option> 
+                      <option>Persiapan</option> 
+                      <option>Pemorsian</option> 
+                      <option>Pengolahan</option> 
+                      <option>Driver</option> 
+                      <option>Pencucian Ompreng</option> 
+                      <option>Kebersihan &amp; Keamanan</option> 
+                      <option>Yang lain / kegiatan SPPI Magang</option> 
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label class="field-label" for="catatan">Kegiatan / Catatan Briefing</label> 
+                    <input id="catatan" class="field" type="text" maxlength="500" placeholder="Catatan opsional">
+                  </div>
+                </div>
+                
+                <div class="mt-5">
+                  <label class="field-label" for="bukti-foto">Upload Bukti Briefing (Foto)</label> 
+                  <label for="bukti-foto" class="upload-zone flex cursor-pointer flex-col items-center justify-center rounded-2xl px-5 py-6 text-center"> 
+                    <i data-lucide="image-up" class="mb-2 text-[#1267c3] w-8 h-8" aria-hidden="true"></i> 
+                    <span class="text-sm font-semibold text-slate-600">Ketuk untuk memilih foto (Maks 10MB)</span> 
+                    <input id="bukti-foto" class="sr-only" type="file" accept="image/*"> 
+                  </label>
+                  
+                  <div id="photo-preview" class="photo-preview mt-3 hidden">
+                    <img id="preview-image" alt="Pratinjau bukti briefing"> 
+                    <button id="remove-photo" type="button" class="mt-2 inline-flex items-center gap-1 text-sm font-bold text-[#b42318]"> 
+                      <i data-lucide="x" width="15" aria-hidden="true"></i> Hapus pratinjau 
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <div id="non-operational-note" class="mt-5 hidden rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-800">
+                Untuk status Belum Operasional atau Suspend, laporan dapat dikirim tanpa mengisi divisi briefing dan foto.
+              </div>
+              
+              <div class="mt-6 flex flex-wrap items-center gap-3">
+                <button id="submit-report" class="submit-report bg-[#1267c3] text-white inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-bold transition hover:bg-blue-700 active:translate-y-1 disabled:cursor-not-allowed disabled:opacity-60" type="submit"> 
+                  <i data-lucide="send" width="17" aria-hidden="true"></i>
+                  <span class="submit-report-label">Kirim Laporan</span>
+                  <span class="submit-success-label">Terkirim!</span> 
+                </button>
+                <p class="text-xs leading-5 text-slate-500">Pastikan data & foto sudah benar.</p>
+              </div>
+            </form>
+          </article>
+          
+          <aside class="space-y-5">
+            <section class="rounded-2xl border border-blue-100 bg-blue-50 p-5">
+              <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-[#1267c3] text-white">
+                <i data-lucide="clock-3" width="19" aria-hidden="true"></i>
+              </div>
+              <h2 class="font-bold text-lg text-slate-800">Jadwal Briefing Divisi</h2>
+              <p class="mt-2 text-xs leading-6 text-slate-600">Pilih jadwal sesuai hari briefing. Tautan akan membuka formulir jadwal di tab baru.</p>
+              <div class="mt-4 space-y-2">
+                <a class="schedule-link block rounded-xl bg-white px-3 py-2 text-xs font-bold text-[#0756a5]" href="https://forms.gle/1PzMr33HES2KtW2t5" target="_blank" rel="noopener noreferrer">Ahad · Persiapan · 16.30–21.00</a> 
+                <a class="schedule-link block rounded-xl bg-white px-3 py-2 text-xs font-bold text-[#0756a5]" href="https://forms.gle/3tKyVdUq4MSHyoTm8" target="_blank" rel="noopener noreferrer">Senin · Pemorsian · 03.30–08.30</a> 
+                <a class="schedule-link block rounded-xl bg-white px-3 py-2 text-xs font-bold text-[#0756a5]" href="https://forms.gle/TeAwLncopuxQAQUa9" target="_blank" rel="noopener noreferrer">Selasa · Pengolahan · 00.00–03.30</a> 
+                <a class="schedule-link block rounded-xl bg-white px-3 py-2 text-xs font-bold text-[#0756a5]" href="https://forms.gle/uZeBSamcT7N9dYjo6" target="_blank" rel="noopener noreferrer">Rabu · Driver · 06.00–11.00</a> 
+                <a class="schedule-link block rounded-xl bg-white px-3 py-2 text-xs font-bold text-[#0756a5]" href="https://forms.gle/grwVNSS19rkZBtUGA" target="_blank" rel="noopener noreferrer">Kamis · Cuci Ompreng · 11.00–20.00</a> 
+                <a class="schedule-link block rounded-xl bg-white px-3 py-2 text-xs font-bold text-[#0756a5]" href="https://forms.gle/E18jch3pEjyYKuAb9" target="_blank" rel="noopener noreferrer">Jumat · CS &amp; Keamanan · 06.00–11.30</a>
+              </div>
+            </section>
+            
+            <section class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+              <h2 class="font-bold text-lg text-slate-800">Panduan Pengisian</h2>
+              <ul class="mt-4 space-y-3 text-sm text-slate-600">
+                <li class="flex gap-3"><i data-lucide="check-circle-2" class="mt-0.5 shrink-0 text-[#087f5b]" width="17" aria-hidden="true"></i><span>Isi sesuai dengan realitas unit hari ini.</span></li>
+                <li class="flex gap-3"><i data-lucide="check-circle-2" class="mt-0.5 shrink-0 text-[#087f5b]" width="17" aria-hidden="true"></i><span>Lampirkan foto resolusi jelas (tidak blur).</span></li>
+                <li class="flex gap-3"><i data-lucide="check-circle-2" class="mt-0.5 shrink-0 text-[#087f5b]" width="17" aria-hidden="true"></i><span>Batas waktu input disesuaikan dengan Divisi.</span></li>
+              </ul>
+            </section>
+          </aside>
+        </div>
+      </section>
+      
+      <!-- Tab 2: Ringkasan View -->
+      <section id="ringkasan-view" class="view" aria-labelledby="summary-heading">
+        <div class="mb-6">
+          <h2 id="summary-heading" class="font-bold text-xl text-slate-800">Ringkasan Kegiatan</h2>
+          <p class="mt-1 text-sm text-slate-500">Overview statik data laporan yang masuk.</p>
+        </div>
+        
+        <div class="grid gap-4 sm:grid-cols-3">
+          <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm border-l-4 border-l-[#1267c3]">
+            <p class="text-sm font-semibold text-slate-500">Total Laporan (Mingguan)</p>
+            <p id="total-count" class="mt-2 text-3xl font-extrabold text-slate-800">24</p>
+          </article>
+          <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm border-l-4 border-l-[#087f5b]">
+            <p class="text-sm font-semibold text-slate-500">Beroperasi</p>
+            <p id="operational-count" class="mt-2 text-3xl font-extrabold text-[#087f5b]">18</p>
+          </article>
+          <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm border-l-4 border-l-[#b45309]">
+            <p class="text-sm font-semibold text-slate-500">Belum Beroperasi</p>
+            <p id="today-count" class="mt-2 text-3xl font-extrabold text-[#b45309]">3</p>
+          </article>
+        </div>
+        
+        <section class="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+          <div class="flex items-start justify-between gap-4 border-b border-slate-100 pb-4">
+            <div>
+              <h3 class="font-bold text-lg text-slate-800">Distribusi Status</h3>
+              <p class="mt-1 text-sm text-slate-500">Rasio kondisi unit yang terdata dalam sistem.</p>
+            </div>
+            <div class="rounded-lg bg-blue-50 p-2.5 text-[#1267c3]">
+              <i data-lucide="pie-chart" width="20" aria-hidden="true"></i>
+            </div>
+          </div>
+          
+          <div class="mt-5 flex flex-col items-center gap-6 md:flex-row md:justify-center">
+            <div class="donut-chart" id="donut-chart" style="background: conic-gradient(#087f5b 0% 40%, #b45309 40% 65%, #b42318 65% 85%, #7c3aed 85% 100%);" aria-label="Diagram persentase status laporan SPPG">
+              <div class="donut-center">
+                <span class="text-xs font-semibold text-slate-500">24 Unit</span>
+              </div>
+            </div>
+            <div class="w-full max-w-sm text-sm">
+              <div class="flex justify-between py-2 border-b border-slate-100">
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-[#087f5b]"></span> Operasional</div>
+                <span class="font-bold">40%</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-slate-100">
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-[#b45309]"></span> Belum Operasional</div>
+                <span class="font-bold">25%</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-slate-100">
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-[#b42318]"></span> Suspend</div>
+                <span class="font-bold">20%</span>
+              </div>
+              <div class="flex justify-between py-2">
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-[#7c3aed]"></span> SPPI Magang</div>
+                <span class="font-bold">15%</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- Tab 3: Admin View -->
+      <section id="admin-view" class="view" aria-labelledby="admin-heading">
+        <div class="mb-6">
+          <h2 id="admin-heading" class="font-bold text-xl text-slate-800">Dashboard Admin</h2>
+          <p class="mt-1 text-sm text-slate-500">Kelola dan tinjau laporan masuk pada portal admin.</p>
+        </div>
+        
+        <section id="admin-lock" class="rounded-2xl border border-blue-100 bg-blue-50 p-5 shadow-sm sm:p-6">
+          <div class="flex items-start gap-3">
+            <div class="rounded-xl bg-[#1267c3] p-3 text-white">
+              <i data-lucide="lock-keyhole" aria-hidden="true"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-slate-800 text-lg">Otentikasi Admin</h3>
+              <p class="mt-1 text-sm text-slate-600">Masukkan PIN rahasia untuk mengakses area admin (Gunakan PIN: 1234).</p>
+            </div>
+          </div>
+          
+          <div class="mt-5 flex max-w-sm gap-3">
+            <input type="password" id="admin-pin-input" class="field" placeholder="Masukkan PIN">
+            <button type="button" onclick="unlockAdmin()" class="rounded-xl bg-[#1267c3] px-5 font-bold text-white transition hover:bg-blue-700">Masuk</button>
+          </div>
+          <p id="admin-error-msg" class="mt-2 hidden text-sm font-semibold text-red-600">PIN tidak valid.</p>
+        </section>
+        
+        <section id="admin-dashboard" class="hidden">
+          <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-4 border-b border-slate-100 pb-4">
+              <div>
+                <h3 class="font-bold text-slate-800 text-lg">Akses Basis Data & Arsip</h3>
+                <p class="mt-1 text-sm text-slate-500">Pusat tautan cepat menuju lembar kerja dan direktori penyimpanan.</p>
+              </div>
+              <button onclick="lockAdmin()" class="rounded-xl border border-slate-200 px-4 py-2 text-sm font-bold text-slate-600 transition hover:bg-slate-50">Kunci Kembali</button>
+            </div>
+            
+            <p class="text-sm text-slate-600 mb-6">Silakan klik tombol di bawah untuk membuka Google Spreadsheet laporan harian atau Folder Google Drive penyimpanan foto bukti briefing.</p>
+            
+            <div class="grid gap-4 sm:grid-cols-2">
+              <a href="https://docs.google.com/spreadsheets/d/1ZPgwss0Sc2gMB07te3q47NSUjA4l3gQcha-bYauXllo/edit" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between rounded-xl border border-emerald-200 bg-emerald-50/70 p-4 transition hover:bg-emerald-100/80">
+                <div class="flex items-center gap-3">
+                  <div class="rounded-lg bg-emerald-600 p-2.5 text-white">
+                    <i data-lucide="table" class="w-5 h-5" aria-hidden="true"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-emerald-900">Google Spreadsheet</h4>
+                    <p class="text-xs text-emerald-700">Lihat rekapitulasi data laporan</p>
+                  </div>
+                </div>
+                <span class="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-3.5 py-2 text-xs font-bold text-white shadow-sm">
+                  Buka <i data-lucide="external-link" class="w-3.5 h-3.5" aria-hidden="true"></i>
+                </span>
+              </a>
+
+              <a href="https://drive.google.com/drive/folders/1LVCWeBKVMNekgrezrCrJ7kYePCaax_3-" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between rounded-xl border border-blue-200 bg-blue-50/70 p-4 transition hover:bg-blue-100/80">
+                <div class="flex items-center gap-3">
+                  <div class="rounded-lg bg-[#1267c3] p-2.5 text-white">
+                    <i data-lucide="folder-open" class="w-5 h-5" aria-hidden="true"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-blue-900">Google Drive Foto</h4>
+                    <p class="text-xs text-blue-700">Akses folder arsip bukti foto</p>
+                  </div>
+                </div>
+                <span class="inline-flex items-center gap-1 rounded-lg bg-[#1267c3] px-3.5 py-2 text-xs font-bold text-white shadow-sm">
+                  Buka <i data-lucide="external-link" class="w-3.5 h-3.5" aria-hidden="true"></i>
+                </span>
+              </a>
+            </div>
+          </article>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // Clock & Date updater
+    function updateClock() {
+      const now = new Date();
+      const optionsDate = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+      document.getElementById('live-date').innerText = now.toLocaleDateString('id-ID', optionsDate);          
+      
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('live-clock').innerText = `${hours}.${minutes}.${seconds} WITA`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Set default Date and Time
+    const initialNow = new Date();
+    document.getElementById('tanggal').value = initialNow.toISOString().split('T')[0];
+    document.getElementById('waktu').value = `${String(initialNow.getHours()).padStart(2, '0')}:${String(initialNow.getMinutes()).padStart(2, '0')}`;
+
+    // Tab Navigation Switcher
+    document.querySelectorAll('.nav-tab').forEach(tab => {
+      tab.addEventListener('click', (e) => {
+        const targetView = e.currentTarget.getAttribute('data-view-target');
+        
+        document.querySelectorAll('.view').forEach(el => el.classList.remove('is-active'));
+        document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('is-active'));
+        
+        document.getElementById(`${targetView}-view`).classList.add('is-active');
+        e.currentTarget.classList.add('is-active');
+      });
+    });
+
+    // Conditional Fields Logic
+    const statusSelect = document.getElementById('status-operasional');
+    const briefingFields = document.getElementById('briefing-fields');
+    const nonOpNote = document.getElementById('non-operational-note');
+    const divisiSelect = document.getElementById('divisi-briefing');
+
+    statusSelect.addEventListener('change', function(e) {
+      const val = e.target.value;
+      if (val === 'Operasional' || val === 'SPPI Magang') {
+        briefingFields.classList.remove('hidden');
+        nonOpNote.classList.add('hidden');
+        divisiSelect.setAttribute('required', 'true');
+      } else if (val === 'Belum Operasional' || val === 'Suspend') {
+        briefingFields.classList.add('hidden');
+        nonOpNote.classList.remove('hidden');
+        divisiSelect.removeAttribute('required');
+      } else {
+        briefingFields.classList.add('hidden');
+        nonOpNote.classList.add('hidden');
+        divisiSelect.removeAttribute('required');
+      }
+    });
+
+    // Photo Preview handler
+    const fileInput = document.getElementById('bukti-foto');
+    const previewContainer = document.getElementById('photo-preview');
+    const previewImage = document.getElementById('preview-image');
+    const removePhotoBtn = document.getElementById('remove-photo');
+
+    fileInput.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          previewImage.src = e.target.result;
+          previewContainer.classList.remove('hidden');
+        }
+        reader.readAsDataURL(file);
+      }
+    });
+
+    removePhotoBtn.addEventListener('click', function() {
+      fileInput.value = "";
+      previewContainer.classList.add('hidden');
+      previewImage.src = "";
+    });
+
+    // Simple Admin PIN Authentication
+    function unlockAdmin() {
+      const pin = document.getElementById('admin-pin-input').value;
+      const errorMsg = document.getElementById('admin-error-msg');
+      if (pin === "1234") {
+        document.getElementById('admin-lock').classList.add('hidden');
+        document.getElementById('admin-dashboard').classList.remove('hidden');
+        errorMsg.classList.add('hidden');
+        document.getElementById('admin-pin-input').value = "";
+      } else {
+        errorMsg.classList.remove('hidden');
+      }
+    }
+
+    function lockAdmin() {
+      document.getElementById('admin-dashboard').classList.add('hidden');
+      document.getElementById('admin-lock').classList.remove('hidden');
+    }
+
+    // Form Submission Handling
+    document.getElementById('report-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const btn = document.getElementById('submit-report');
+      const msg = document.getElementById('form-notice');
+      const file = fileInput.files[0];
+      const statusVal = statusSelect.value;
+      
+      if ((statusVal === 'Operasional' || statusVal === 'SPPI Magang') && !file) {
+        showMessage("Wajib melampirkan bukti foto briefing untuk status operasional ini.", false);
+        return;
+      }
+
+      if (file && file.size > 10 * 1024 * 1024) {
+        showMessage("Ukuran foto melebihi batas (Maks 10MB).", false);
+        return;
+      }
+
+      btn.disabled = true;
+      btn.classList.add('submit-loading');
+      msg.classList.remove('show');
+
+      const formData = {
+        nama: document.getElementById('nama-lengkap').value,
+        email: document.getElementById('email').value,
+        sppg: document.getElementById('nama-sppg').value,
+        tanggal: document.getElementById('tanggal').value,
+        waktu: document.getElementById('waktu').value,
+        status: statusVal,
+        divisi: document.getElementById('divisi-briefing').value || '-',
+        catatan: document.getElementById('catatan').value || '-'
+      };
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          formData.mimeType = file.type;
+          formData.fileData = event.target.result.split(',')[1];
+          sendToGoogle(formData);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        sendToGoogle(formData);
+      }
+
+      function sendToGoogle(data) {
+        if (typeof google !== 'undefined' && google.script) {
+          google.script.run
+            .withSuccessHandler(function(response) {
+              handleResponse(response.success, response.message);
+            })
+            .withFailureHandler(function(error) {
+              handleResponse(false, "Koneksi gagal. Periksa jaringan Anda.");
+            })
+            .processForm(data);
+        } else {
+          setTimeout(() => {
+            handleResponse(true, "Laporan berhasil diarsipkan (Mode Simulasi)!");
+          }, 1200);
+        }
+      }
+
+      function handleResponse(isSuccess, text) {
+        btn.disabled = false;
+        btn.classList.remove('submit-loading');
+        
+        if (isSuccess) {
+          btn.classList.add('is-success');
+          showMessage(text, true);
+          document.getElementById('report-form').reset();
+          document.getElementById('tanggal').value = new Date().toISOString().split('T')[0];
+          previewContainer.classList.add('hidden');
+          briefingFields.classList.add('hidden');
+          nonOpNote.classList.add('hidden');
+          
+          setTimeout(() => { btn.classList.remove('is-success'); }, 3000);
+        } else {
+          showMessage("Gagal: " + text, false);
+        }
+      }
+
+      function showMessage(text, isSuccess) {
+        msg.innerText = text;
+        msg.className = isSuccess 
+          ? "notice show mb-5 items-center gap-3 rounded-xl border px-4 py-3 text-sm font-semibold border-emerald-200 bg-emerald-50 text-emerald-800" 
+          : "notice show mb-5 items-center gap-3 rounded-xl border px-4 py-3 text-sm font-semibold border-red-200 bg-red-50 text-red-800";
+      }
+    });
+  </script>
+</body>
+</html>
